@@ -1,0 +1,44 @@
+import pythonosc 
+from pythonosc.udp_client import SimpleUDPClient
+
+
+
+from tkinter import *
+
+ip = "127.0.0.1"
+port = 6448
+
+client = SimpleUDPClient(ip, port)  # Create client
+
+ 
+def showValues():
+    label1.config(text=str(w1.get()))
+    label2.config(text=str(w2.get()))
+    label1.after(100, showValues)
+    client.send_message("/wek/inputs", [float(w1.get()),float(w2.get()),float(w3.get())])
+
+   
+
+
+master = Tk()
+w1 = Scale(master, from_=0, to=127, length=200, tickinterval=10)
+w1.set(0)
+w1.pack()
+w2 = Scale(master, from_=0, to=10,length=200, tickinterval=1, )
+
+w2.set(0)
+w2.pack()
+w3 = Scale(master, from_=0, to=10,length=200, tickinterval=1, ) 
+w3.set(0)
+w3.pack()
+label1 = Label(master, fg="black")
+label1.pack()
+label2 = Label(master, fg="black")
+label2.pack()
+showValues()
+print (float(w1.get()))
+print (w2.get())
+print (w3.get())
+
+
+master.mainloop()
